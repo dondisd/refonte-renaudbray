@@ -15,6 +15,9 @@
 @font-face{font-family:'Literata';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/Literata-600.woff2') format('woff2');}
 @font-face{font-family:'Literata';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/Literata-700.woff2') format('woff2');}
 
+/* Fallbacks métriques : le swap de police ne déplace plus la mise en page (CLS) */
+@font-face { font-family: 'Literata Fallback'; src: local('Georgia'); size-adjust: 104%; ascent-override: 92%; descent-override: 24%; line-gap-override: 0%; }
+@font-face { font-family: 'Karla Fallback'; src: local('Arial'); size-adjust: 99%; ascent-override: 94%; descent-override: 24%; line-gap-override: 0%; }
 /* Renaud-Bray — refonte « table de librairie » (démonstration)
    Literata (serif littéraire) + Karla. Papier crème, encre, jaune RB en accent. */
 :root {
@@ -32,15 +35,15 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--papier);
   color: var(--encre);
-  font-family: 'Karla', system-ui, sans-serif;
+  font-family: 'Karla', 'Karla Fallback', system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-h1, h2, h3 { font-family: 'Literata', serif; line-height: 1.06; letter-spacing: -0.015em; }
+h1, h2, h3 { font-family: 'Literata', 'Literata Fallback', serif; line-height: 1.06; letter-spacing: -0.015em; }
 img { max-width: 100%; display: block; }
-.em { font-family: 'Literata', serif; font-style: italic; font-weight: 500; }
+.em { font-family: 'Literata', 'Literata Fallback', serif; font-style: italic; font-weight: 500; }
 
 /* Boutons */
 .btn {
