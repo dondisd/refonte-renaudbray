@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Renaud-Bray | Librairie québécoise depuis 1965 — Livres, cadeaux et jeux</title>
+  <meta name="description" content="Votre prochain livre est déjà ici. Nouveautés, palmarès, coups de cœur : en ligne ou dans votre librairie Renaud-Bray.">
+  <link rel="preload" href="fonts/Literata-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/Karla-400.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+/* fonts.css injecté au build */
+@font-face{font-family:'Karla';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/Karla-400.woff2') format('woff2');}
+@font-face{font-family:'Karla';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/Karla-500.woff2') format('woff2');}
+@font-face{font-family:'Karla';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/Karla-700.woff2') format('woff2');}
+@font-face{font-family:'Literata';font-style:italic;font-weight:500;font-display:swap;src:url('fonts/Literata-500i.woff2') format('woff2');}
+@font-face{font-family:'Literata';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/Literata-600.woff2') format('woff2');}
+@font-face{font-family:'Literata';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/Literata-700.woff2') format('woff2');}
+
+/* Renaud-Bray — refonte « table de librairie » (démonstration)
+   Literata (serif littéraire) + Karla. Papier crème, encre, jaune RB en accent. */
+:root {
+  --papier: #faf6ee;
+  --papier-2: #f3ecdf;
+  --encre: #1a1611;
+  --brun: #6d6353;
+  --jaune: #ffd41d;
+  --jaune-2: #f5c400;
+  --ligne: rgba(26, 22, 17, 0.12);
+  --r-lg: 22px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--papier);
+  color: var(--encre);
+  font-family: 'Karla', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1, h2, h3 { font-family: 'Literata', serif; line-height: 1.06; letter-spacing: -0.015em; }
+img { max-width: 100%; display: block; }
+.em { font-family: 'Literata', serif; font-style: italic; font-weight: 500; }
+
+/* Boutons */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-weight: 700; text-decoration: none; color: var(--encre);
+  background: var(--jaune); border: none; cursor: pointer;
+  border-radius: 999px; transition: background-color 0.2s, transform 0.2s;
+  font-family: 'Karla', sans-serif;
+}
+.btn:hover { background: var(--jaune-2); }
+.btn:active { transform: scale(0.96); }
+.btn .arr {
+  display: inline-grid; place-items: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(26, 22, 17, 0.12); font-size: 14px; transition: transform 0.25s;
+}
+.btn:hover .arr { transform: rotate(-45deg); }
+
+/* Nav */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  display: flex; align-items: center; gap: 16px;
+  padding: 12px clamp(16px, 4vw, 40px);
+  background: rgba(250, 246, 238, 0.85);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--ligne);
+}
+.nav img { width: 132px; height: auto; }
+.nav-links { display: none; gap: 22px; margin-left: 10px; }
+.nav-links a { color: var(--brun); text-decoration: none; font-weight: 500; font-size: 15px; }
+.nav-links a:hover { color: var(--encre); }
+.nav .btn { margin-left: auto; padding: 10px 20px; font-size: 14.5px; }
+@media (min-width: 720px) { .nav-links { display: flex; } }
+
+/* Hero */
+.hero {
+  min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
+  padding: 110px clamp(20px, 5vw, 56px) 40px; position: relative; overflow: hidden;
+  background:
+    radial-gradient(120vw 60vh at 85% -10%, rgba(255, 212, 29, 0.22), transparent 60%),
+    var(--papier);
+}
+.kicker {
+  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--brun); border: 1px solid var(--ligne); border-radius: 999px;
+  padding: 8px 14px; margin-bottom: 20px; background: rgba(255, 255, 255, 0.5);
+}
+.kicker .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--jaune-2); }
+.hero h1 { font-size: clamp(40px, 10.5vw, 76px); font-weight: 700; max-width: 13ch; margin-bottom: 16px; }
+.hero .lede { color: var(--brun); font-size: clamp(15.5px, 2.4vw, 18px); max-width: 46ch; margin-bottom: 26px; }
+
+/* Recherche = CTA primaire */
+.search {
+  display: flex; align-items: center; gap: 6px;
+  background: #fff; border: 1.5px solid var(--encre); border-radius: 999px;
+  padding: 6px 6px 6px 20px; max-width: 560px; width: 100%;
+  box-shadow: 0 10px 30px rgba(26, 22, 17, 0.08);
+  margin-bottom: 18px;
+}
+.search input {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-family: 'Karla', sans-serif; font-size: 16.5px; color: var(--encre); min-width: 0;
+}
+.search input::placeholder { color: #9a8f7d; }
+.search .btn { padding: 12px 22px; font-size: 15px; flex-shrink: 0; }
+.rayons { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+.rayons a {
+  font-size: 13.5px; font-weight: 500; color: var(--encre); text-decoration: none;
+  border: 1px solid var(--ligne); border-radius: 999px; padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.55); transition: background-color 0.2s, border-color 0.2s;
+}
+.rayons a:hover { background: #fff; border-color: var(--encre); }
+.proof { font-size: 13.5px; color: var(--brun); font-weight: 500; }
+
+/* Couvertures flottantes du hero */
+.hero-covers { display: flex; gap: 14px; margin-top: 30px; align-items: flex-end; }
+.hero-covers img {
+  width: clamp(88px, 24vw, 150px); border-radius: 6px;
+  box-shadow: 0 18px 34px rgba(26, 22, 17, 0.22);
+}
+.hero-covers img:nth-child(1) { transform: rotate(-4deg) translateY(6px); }
+.hero-covers img:nth-child(2) { transform: rotate(2deg); }
+.hero-covers img:nth-child(3) { transform: rotate(5deg) translateY(10px); }
+
+.stagger { opacity: 0.012; transform: translateY(18px); animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+.stagger:nth-child(1) { animation-delay: 0.05s; }
+.stagger:nth-child(2) { animation-delay: 0.14s; }
+.stagger:nth-child(3) { animation-delay: 0.23s; }
+.stagger:nth-child(4) { animation-delay: 0.32s; }
+.stagger:nth-child(5) { animation-delay: 0.41s; }
+.stagger:nth-child(6) { animation-delay: 0.5s; }
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+/* Sections */
+section { padding: clamp(56px, 10vw, 104px) 0; }
+.section-head { padding: 0 clamp(20px, 5vw, 56px); margin-bottom: clamp(24px, 5vw, 40px); }
+.eyebrow { color: var(--brun); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+.eyebrow::before { content: ''; display: inline-block; width: 22px; height: 3px; background: var(--jaune-2); border-radius: 2px; margin-right: 10px; vertical-align: middle; }
+h2 { font-size: clamp(29px, 6.2vw, 50px); font-weight: 700; }
+
+/* Table des nouveautés */
+.table-bg { background: var(--papier-2); }
+.grid-livres {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+  padding: 0 clamp(20px, 5vw, 56px);
+}
+@media (min-width: 820px) { .grid-livres { grid-template-columns: repeat(3, 1fr); } }
+.livre {
+  background: #fff; border: 1px solid var(--ligne); border-radius: var(--r-lg);
+  padding: 18px 16px 16px; display: grid; gap: 10px; justify-items: start;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.livre:hover { transform: translateY(-6px) rotate(-0.4deg); box-shadow: 0 18px 36px rgba(26, 22, 17, 0.12); }
+.livre img {
+  width: 74%; margin: 0 auto; border-radius: 4px;
+  box-shadow: 0 14px 22px rgba(26, 22, 17, 0.2);
+}
+.livre h3 { font-size: 16.5px; font-weight: 600; }
+.stock { font-size: 12px; font-weight: 500; color: #2f7a3d; }
+.livre-bas { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.prix { font-family: 'Literata', serif; font-weight: 700; font-size: 18px; }
+.livre .btn { padding: 8px 16px; font-size: 13.5px; }
+
+/* Univers */
+.univers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 clamp(20px, 5vw, 56px); }
+@media (min-width: 820px) { .univers { grid-template-columns: repeat(4, 1fr); } }
+.uni {
+  border-radius: var(--r-lg); padding: 22px 18px; min-height: 128px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  background: var(--encre); color: var(--papier); text-decoration: none;
+  transition: transform 0.3s;
+}
+.uni:hover { transform: translateY(-5px); }
+.uni.jaune { background: var(--jaune); color: var(--encre); }
+.uni .num { font-size: 12.5px; font-weight: 700; opacity: 0.55; }
+.uni h3 { font-size: 21px; font-weight: 600; }
+
+/* Librairie / contact */
+.visite { padding: 0 clamp(20px, 5vw, 56px); display: grid; gap: 16px; }
+@media (min-width: 820px) { .visite { grid-template-columns: 1.2fr 1fr; } }
+.visite-carte {
+  background: #fff; border: 1px solid var(--ligne); border-radius: var(--r-lg);
+  padding: 28px 24px;
+}
+.visite-carte h3 { font-size: 24px; font-weight: 600; margin-bottom: 8px; }
+.visite-carte p { color: var(--brun); font-size: 15px; margin-bottom: 18px; max-width: 42ch; }
+.infolettre { display: flex; gap: 6px; background: var(--papier); border: 1.5px solid var(--encre); border-radius: 999px; padding: 5px 5px 5px 18px; }
+.infolettre input { flex: 1; border: none; outline: none; background: transparent; font-family: 'Karla', sans-serif; font-size: 15px; min-width: 0; }
+.infolettre .btn { padding: 10px 18px; font-size: 14px; flex-shrink: 0; }
+
+/* Footer */
+.footer { background: var(--encre); color: var(--papier); }
+.footer-inner { padding: clamp(36px, 7vw, 60px) clamp(20px, 5vw, 56px); display: grid; gap: 20px; }
+.footer-logo { font-family: 'Literata', serif; font-size: 22px; font-weight: 700; }
+.footer-tag { color: rgba(250, 246, 238, 0.65); font-size: 14px; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.footer-links a { color: rgba(250, 246, 238, 0.75); text-decoration: none; font-size: 14.5px; }
+.footer-links a:hover { color: var(--papier); }
+.footer-credit { color: rgba(250, 246, 238, 0.45); font-size: 13px; }
+.footer-credit a { color: rgba(250, 246, 238, 0.7); }
+
+[data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
+[data-reveal].in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .stagger { animation: none; opacity: 1; transform: none; }
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+  </style>
+</head>
+<body>
+
+<header class="nav">
+  <a href="#" aria-label="Renaud-Bray, accueil"><img src="assets/logo-rb.png" alt="Renaud-Bray, depuis 1965" width="132" height="43"></a>
+  <nav class="nav-links" aria-label="Navigation principale">
+    <a href="#nouveautes">Nouveautés</a>
+    <a href="#univers">Univers</a>
+    <a href="#librairies">Librairies</a>
+  </nav>
+  <a class="btn" href="#nouveautes">Panier<span class="arr" aria-hidden="true">→</span></a>
+</header>
+
+<!-- HERO : la recherche est le CTA primaire -->
+<section class="hero">
+  <p class="kicker stagger"><span class="dot" aria-hidden="true"></span>Librairie québécoise · Depuis 1965</p>
+  <h1 class="stagger">Votre prochain livre est <span class="em">déjà ici.</span></h1>
+  <p class="lede stagger">Livres, cadeaux et jeux. En ligne ou dans votre librairie de quartier, avec les conseils des libraires d'ici.</p>
+  <form class="search stagger" role="search" aria-label="Chercher un livre">
+    <input type="search" placeholder="Titre, auteur, ISBN..." aria-label="Titre, auteur ou ISBN">
+    <button class="btn" type="submit">Chercher<span class="arr" aria-hidden="true">→</span></button>
+  </form>
+  <div class="rayons stagger" aria-label="Rayons populaires">
+    <a href="#nouveautes">Palmarès des ventes</a>
+    <a href="#nouveautes">Coups de cœur</a>
+    <a href="#univers">BookTok</a>
+    <a href="#univers">Harry Potter</a>
+    <a href="#univers">Jeux</a>
+  </div>
+  <div class="hero-covers stagger" aria-hidden="true">
+    <img src="assets/porteuse.webp" alt="" width="150" height="230">
+    <img src="assets/predateurs.webp" alt="" width="150" height="238">
+    <img src="assets/arbredefer.webp" alt="" width="150" height="230">
+  </div>
+</section>
+
+<!-- LA TABLE DES NOUVEAUTÉS -->
+<section class="table-bg" id="nouveautes">
+  <div class="section-head" data-reveal>
+    <p class="eyebrow">La table des nouveautés</p>
+    <h2>Posés là pour vous, <span class="em">cette semaine.</span></h2>
+  </div>
+  <div class="grid-livres">
+    <article class="livre" data-reveal><img loading="lazy" src="assets/gamechangers.webp" alt="Game Changers T.02 Heated Rivalry" width="340" height="520"><h3>Game Changers T.02</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">34,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
+    <article class="livre" data-reveal><img loading="lazy" src="assets/momentscozy.webp" alt="Moments cozy, coloriage réconfortant" width="340" height="440"><h3>Moments cozy</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">12,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
+    <article class="livre" data-reveal><img loading="lazy" src="assets/viedecanard.webp" alt="Vie de canard cozy" width="340" height="440"><h3>Vie de canard cozy</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">12,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
+    <article class="livre" data-reveal><img loading="lazy" src="assets/porteuse.webp" alt="La Porteuse de lettres" width="340" height="520"><h3>La Porteuse de lettres</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">18,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
+    <article class="livre" data-reveal><img loading="lazy" src="assets/predateurs.webp" alt="L'Heure des prédateurs" width="340" height="540"><h3>L'Heure des prédateurs</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">15,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
+    <article class="livre" data-reveal><img loading="lazy" src="assets/arbredefer.webp" alt="L'Arbre de fer" width="340" height="520"><h3>L'Arbre de fer</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">34,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
+  </div>
+</section>
+
+<!-- UNIVERS -->
+<section id="univers">
+  <div class="section-head" data-reveal>
+    <p class="eyebrow">Nos univers</p>
+    <h2>Il y a un rayon <span class="em">pour ça.</span></h2>
+  </div>
+  <div class="univers">
+    <a class="uni" href="#" data-reveal><span class="num">01</span><h3>BookTok</h3></a>
+    <a class="uni jaune" href="#" data-reveal><span class="num">02</span><h3>Harry Potter</h3></a>
+    <a class="uni" href="#" data-reveal><span class="num">03</span><h3>Jeux de voyage</h3></a>
+    <a class="uni jaune" href="#" data-reveal><span class="num">04</span><h3>Tarot &amp; coloriage</h3></a>
+  </div>
+</section>
+
+<!-- LIBRAIRIES + INFOLETTRE -->
+<section class="table-bg" id="librairies">
+  <div class="section-head" data-reveal>
+    <p class="eyebrow">En ligne ou en librairie</p>
+    <h2>Passez nous voir, <span class="em">on a des idées.</span></h2>
+  </div>
+  <div class="visite">
+    <div class="visite-carte" data-reveal>
+      <h3>Votre librairie de quartier</h3>
+      <p>Trouvez une succursale, vérifiez les heures d'ouverture, ou appelez le service à la clientèle.</p>
+      <a class="btn" href="tel:+15143422815">514 342-2815<span class="arr" aria-hidden="true">→</span></a>
+    </div>
+    <div class="visite-carte" data-reveal>
+      <h3>L'infolettre</h3>
+      <p>Primeurs, coups de cœur et promos exclusives, une fois par semaine.</p>
+      <form class="infolettre">
+        <input type="email" placeholder="Votre courriel" aria-label="Votre courriel">
+        <button class="btn" type="submit">M'inscrire</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <p class="footer-logo">Renaud-Bray</p>
+    <p class="footer-tag">Livres + cadeaux + jeux · Depuis 1965</p>
+    <nav class="footer-links" aria-label="Liens de pied de page">
+      <a href="#nouveautes">Nouveautés</a>
+      <a href="#univers">Univers</a>
+      <a href="#librairies">Nos succursales</a>
+      <a href="#">Cartes-cadeaux</a>
+      <a href="#">Service aux institutions</a>
+    </nav>
+    <p class="footer-credit">Concept non affilié · démonstration par <a href="https://www.dondisanteme.com">Dondi Santeme</a></p>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries) {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }
+}, { threshold: 0.12 });
+document.querySelectorAll('[data-reveal]').forEach((el, i) => {
+  el.style.transitionDelay = `${(i % 3) * 80}ms`;
+  io.observe(el);
+});
+</script>
+</body>
+</html>
