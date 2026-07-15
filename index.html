@@ -145,28 +145,77 @@ section { padding: clamp(56px, 10vw, 104px) 0; }
 .eyebrow::before { content: ''; display: inline-block; width: 22px; height: 3px; background: var(--jaune-2); border-radius: 2px; margin-right: 10px; vertical-align: middle; }
 h2 { font-size: clamp(29px, 6.2vw, 50px); font-weight: 700; }
 
-/* Table des nouveautés */
-.table-bg { background: var(--papier-2); }
-.grid-livres {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
-  padding: 0 clamp(20px, 5vw, 56px);
+/* Bandeau expédition (leur vrai avis) */
+.bandeau {
+  margin-top: 67px;
+  background: var(--encre); color: var(--papier);
+  font-size: 13px; font-weight: 500; text-align: center;
+  padding: 9px 16px;
 }
-@media (min-width: 820px) { .grid-livres { grid-template-columns: repeat(3, 1fr); } }
+.bandeau strong { color: var(--jaune); font-weight: 700; }
+
+/* Nouveautés — rangées type « à venir » (réf. billetterie evenko) */
+.table-bg { background: var(--papier-2); }
+.liste-livres { display: grid; gap: 12px; padding: 0 clamp(20px, 5vw, 56px); }
 .livre {
+  display: flex; align-items: center; gap: 16px;
   background: #fff; border: 1px solid var(--ligne); border-radius: var(--r-lg);
-  padding: 18px 16px 16px; display: grid; gap: 10px; justify-items: start;
+  padding: 12px;
   transition: transform 0.3s, box-shadow 0.3s;
 }
-.livre:hover { transform: translateY(-6px) rotate(-0.4deg); box-shadow: 0 18px 36px rgba(26, 22, 17, 0.12); }
-.livre img {
-  width: 74%; margin: 0 auto; border-radius: 4px;
-  box-shadow: 0 14px 22px rgba(26, 22, 17, 0.2);
+.livre:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(26, 22, 17, 0.1); }
+.couv {
+  width: 82px; height: 110px; flex-shrink: 0;
+  display: grid; place-items: center;
+  background: var(--papier-2); border-radius: 12px; overflow: hidden;
 }
-.livre h3 { font-size: 16.5px; font-weight: 600; }
-.stock { font-size: 12px; font-weight: 500; color: #2f7a3d; }
-.livre-bas { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-.prix { font-family: 'Literata', serif; font-weight: 700; font-size: 18px; }
+.couv img {
+  max-width: 78%; max-height: 88%; width: auto; height: auto;
+  border-radius: 3px; box-shadow: 0 6px 14px rgba(26, 22, 17, 0.25);
+}
+.livre-info { flex: 1; min-width: 0; display: grid; gap: 3px; }
+.stock {
+  color: #2f7a3d; font-size: 11.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.livre-info h3 { font-size: clamp(16px, 4vw, 19px); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.auteur { color: var(--brun); font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.livre-fin { display: grid; gap: 8px; justify-items: end; flex-shrink: 0; }
+.prix { font-family: 'Literata', 'Literata Fallback', serif; font-weight: 700; font-size: 17px; white-space: nowrap; }
 .livre .btn { padding: 8px 16px; font-size: 13.5px; }
+@media (min-width: 820px) { .livre { padding: 14px 18px 14px 14px; } .couv { width: 92px; height: 122px; } }
+
+/* Sélection estivale (leur campagne réelle) */
+.ete {
+  margin: 0 clamp(20px, 5vw, 56px); border-radius: var(--r-lg);
+  background: var(--jaune); color: var(--encre);
+  padding: clamp(26px, 5vw, 44px) clamp(22px, 4vw, 40px);
+  display: grid; gap: 10px; justify-items: start;
+}
+.ete .sur { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+.ete h3 { font-size: clamp(26px, 6vw, 42px); font-weight: 700; }
+.ete p { max-width: 46ch; font-size: 15px; }
+.ete .btn { background: var(--encre); color: var(--papier); margin-top: 6px; }
+.ete .btn:hover { background: #000; }
+.ete .btn .arr { background: rgba(250, 246, 238, 0.2); }
+
+/* Carte-cadeaux (leur offre réelle) */
+.cadeau {
+  margin: 16px clamp(20px, 5vw, 56px) 0; border-radius: var(--r-lg);
+  background: #fff; border: 1px solid var(--ligne);
+  padding: 22px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.cadeau-txt { flex: 1; min-width: 200px; }
+.cadeau h3 { font-size: 20px; font-weight: 600; margin-bottom: 4px; }
+.cadeau p { color: var(--brun); font-size: 14px; }
+
+/* Téléphone : le numéro respire, le bouton reste un bouton */
+.tel-num {
+  display: block; font-family: 'Literata', 'Literata Fallback', serif;
+  font-size: clamp(26px, 6vw, 34px); font-weight: 700; color: var(--encre);
+  text-decoration: none; margin-bottom: 14px; white-space: nowrap;
+}
+.tel-note { font-size: 12.5px; color: var(--brun); margin-top: 10px; }
 
 /* Univers */
 .univers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 clamp(20px, 5vw, 56px); }
@@ -226,8 +275,10 @@ h2 { font-size: clamp(29px, 6.2vw, 50px); font-weight: 700; }
   <a class="btn" href="#nouveautes">Panier<span class="arr" aria-hidden="true">→</span></a>
 </header>
 
+<p class="bandeau">Vos commandes sont expédiées par <strong>Poste Canada</strong> et livrées selon les délais habituels.</p>
+
 <!-- HERO : la recherche est le CTA primaire -->
-<section class="hero">
+<section class="hero" style="min-height:calc(100svh - 40px)">
   <p class="kicker stagger"><span class="dot" aria-hidden="true"></span>Librairie québécoise · Depuis 1965</p>
   <h1 class="stagger">Votre prochain livre est <span class="em">déjà ici.</span></h1>
   <p class="lede stagger">Livres, cadeaux et jeux. En ligne ou dans votre librairie de quartier, avec les conseils des libraires d'ici.</p>
@@ -235,12 +286,16 @@ h2 { font-size: clamp(29px, 6.2vw, 50px); font-weight: 700; }
     <input type="search" placeholder="Titre, auteur, ISBN..." aria-label="Titre, auteur ou ISBN">
     <button class="btn" type="submit">Chercher<span class="arr" aria-hidden="true">→</span></button>
   </form>
-  <div class="rayons stagger" aria-label="Rayons populaires">
+  <div class="rayons stagger" aria-label="Rayons">
     <a href="#nouveautes">Palmarès des ventes</a>
     <a href="#nouveautes">Coups de cœur</a>
-    <a href="#univers">BookTok</a>
-    <a href="#univers">Harry Potter</a>
-    <a href="#univers">Jeux</a>
+    <a href="#nouveautes">Livres</a>
+    <a href="#univers">Jeunesse</a>
+    <a href="#univers">Bébé</a>
+    <a href="#univers">Jeux &amp; jouets</a>
+    <a href="#univers">Papeterie</a>
+    <a href="#univers">Cadeaux</a>
+    <a href="#univers">Livres numériques</a>
   </div>
   <div class="hero-covers stagger" aria-hidden="true">
     <img src="assets/porteuse.webp" alt="" width="340" height="550">
@@ -255,13 +310,30 @@ h2 { font-size: clamp(29px, 6.2vw, 50px); font-weight: 700; }
     <p class="eyebrow">La table des nouveautés</p>
     <h2>Posés là pour vous, <span class="em">cette semaine.</span></h2>
   </div>
-  <div class="grid-livres">
-    <article class="livre" data-reveal><img loading="lazy" src="assets/gamechangers.webp" alt="Game Changers T.02 Heated Rivalry" width="340" height="528"><h3>Game Changers T.02</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">34,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
-    <article class="livre" data-reveal><img loading="lazy" src="assets/momentscozy.webp" alt="Moments cozy, coloriage réconfortant" width="340" height="340"><h3>Moments cozy</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">12,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
-    <article class="livre" data-reveal><img loading="lazy" src="assets/viedecanard.webp" alt="Vie de canard cozy" width="340" height="340"><h3>Vie de canard cozy</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">12,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
-    <article class="livre" data-reveal><img loading="lazy" src="assets/porteuse.webp" alt="La Porteuse de lettres" width="340" height="550"><h3>La Porteuse de lettres</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">18,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
-    <article class="livre" data-reveal><img loading="lazy" src="assets/predateurs.webp" alt="L'Heure des prédateurs" width="340" height="558"><h3>L'Heure des prédateurs</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">15,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
-    <article class="livre" data-reveal><img loading="lazy" src="assets/arbredefer.webp" alt="L'Arbre de fer" width="340" height="544"><h3>L'Arbre de fer</h3><p class="stock">En stock · Expédié en 48 h</p><div class="livre-bas"><span class="prix">34,95 $</span><button class="btn" type="button">Ajouter</button></div></article>
+  <div class="liste-livres">
+    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/porteuse.webp" alt="La Porteuse de lettres" width="340" height="550"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>La Porteuse de lettres</h3><p class="auteur">Francesca Giannone · Roman</p></div><div class="livre-fin"><span class="prix">18,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
+    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/predateurs.webp" alt="L'Heure des prédateurs" width="340" height="558"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>L'Heure des prédateurs</h3><p class="auteur">Giuliano da Empoli · Essai</p></div><div class="livre-fin"><span class="prix">15,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
+    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/arbredefer.webp" alt="L'Arbre de fer" width="340" height="544"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>L'Arbre de fer</h3><p class="auteur">Michael Connelly · Polar</p></div><div class="livre-fin"><span class="prix">34,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
+    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/gamechangers.webp" alt="Game Changers T.02 Heated Rivalry" width="340" height="528"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>Game Changers T.02</h3><p class="auteur">Rachel Reid · Romance</p></div><div class="livre-fin"><span class="prix">34,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
+    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/momentscozy.webp" alt="Moments cozy, coloriage réconfortant" width="340" height="340"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>Moments cozy</h3><p class="auteur">Coloriage réconfortant</p></div><div class="livre-fin"><span class="prix">12,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
+    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/viedecanard.webp" alt="Vie de canard cozy" width="340" height="340"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>Vie de canard cozy</h3><p class="auteur">Coloriage réconfortant</p></div><div class="livre-fin"><span class="prix">12,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
+  </div>
+</section>
+
+<!-- SÉLECTION ESTIVALE + CARTE-CADEAUX (leurs offres réelles) -->
+<section>
+  <div class="ete" data-reveal>
+    <p class="sur">Sélection estivale</p>
+    <h3>C'est l'été. L'évasion commence ici.</h3>
+    <p>Livres de voyage, romans de plage, jeux pour la route : la sélection de nos libraires pour la saison.</p>
+    <a class="btn" href="#nouveautes">Voir la sélection<span class="arr" aria-hidden="true">→</span></a>
+  </div>
+  <div class="cadeau" data-reveal>
+    <div class="cadeau-txt">
+      <h3>La carte-cadeau Renaud-Bray</h3>
+      <p>Le cadeau qui fait toujours plaisir. Vérifiez aussi la balance de votre carte.</p>
+    </div>
+    <a class="btn" href="#">Offrir une carte<span class="arr" aria-hidden="true">→</span></a>
   </div>
 </section>
 
@@ -289,7 +361,9 @@ h2 { font-size: clamp(29px, 6.2vw, 50px); font-weight: 700; }
     <div class="visite-carte" data-reveal>
       <h3>Votre librairie de quartier</h3>
       <p>Trouvez une succursale, vérifiez les heures d'ouverture, ou appelez le service à la clientèle.</p>
-      <a class="btn" href="tel:+15143422815">514 342-2815<span class="arr" aria-hidden="true">→</span></a>
+      <a class="tel-num" href="tel:+15143422815">514&nbsp;342-2815</a>
+      <a class="btn" href="#">Trouver une succursale<span class="arr" aria-hidden="true">→</span></a>
+      <p class="tel-note">À Montréal · 1 888 746-2283 sans frais ailleurs au Canada</p>
     </div>
     <div class="visite-carte" data-reveal>
       <h3>L'infolettre</h3>
@@ -311,7 +385,9 @@ h2 { font-size: clamp(29px, 6.2vw, 50px); font-weight: 700; }
       <a href="#univers">Univers</a>
       <a href="#librairies">Nos succursales</a>
       <a href="#">Cartes-cadeaux</a>
+      <a href="#">Livres numériques</a>
       <a href="#">Service aux institutions</a>
+      <a href="#">Infolettre</a>
     </nav>
     <p class="footer-credit">Concept non affilié · démonstration par <a href="https://www.dondisanteme.com">Dondi Santeme</a></p>
   </div>
