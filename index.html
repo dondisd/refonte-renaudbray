@@ -178,7 +178,7 @@ h2 { font-size: clamp(29px, 6.2vw, 50px); font-weight: 700; }
   color: #2f7a3d; font-size: 11.5px; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.05em;
 }
-.livre-info h3 { font-size: clamp(16px, 4vw, 19px); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.livre-info h3 { font-size: clamp(16px, 4vw, 19px); font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .auteur { color: var(--brun); font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .livre-fin { display: grid; gap: 8px; justify-items: end; flex-shrink: 0; }
 .prix { font-family: 'Literata', 'Literata Fallback', serif; font-weight: 700; font-size: 17px; white-space: nowrap; }
