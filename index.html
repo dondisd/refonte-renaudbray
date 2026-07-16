@@ -154,36 +154,58 @@ h2 { font-size: clamp(29px, 6.2vw, 50px); font-weight: 700; }
 }
 .bandeau strong { color: var(--jaune); font-weight: 700; }
 
-/* Nouveautés — rangées type « à venir » (réf. billetterie evenko) */
+/* Nouveautés — GALERIE ARCHIVE scroll-driven (réf. prmpt) : panneau encre qui recouvre,
+   couvertures éparpillées qui scalent à l'entrée/sortie, outro voile crème + bouton Voir. */
 .table-bg { background: var(--papier-2); }
-.liste-livres { display: grid; gap: 12px; padding: 0 clamp(20px, 5vw, 56px); }
-.livre {
-  display: flex; align-items: center; gap: 16px;
-  background: #fff; border: 1px solid var(--ligne); border-radius: var(--r-lg);
-  padding: 12px;
-  transition: transform 0.3s, box-shadow 0.3s;
+.archive { padding: 0; background: var(--encre); position: relative; }
+.arch-sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.arch-wrap { width: 100%; padding: min(38vh, 340px) clamp(14px, 3vw, 40px) 20vh; will-change: transform; }
+.arch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(10px, 2.5vw, 22px); }
+@media (min-width: 640px) { .arch-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) { .arch-grid { grid-template-columns: repeat(4, 1fr); } }
+.arch-cell { aspect-ratio: 2 / 3; }
+.bp-card {
+  width: 100%; height: 100%; will-change: transform;
+  transform: scale(0);
+  display: flex; flex-direction: column; justify-content: center; gap: 8px;
 }
-.livre:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(26, 22, 17, 0.1); }
-.couv {
-  width: 82px; height: 110px; flex-shrink: 0;
-  display: grid; place-items: center;
-  background: var(--papier-2); border-radius: 12px; overflow: hidden;
+.bp-card img {
+  max-width: 100%; max-height: 82%; width: auto; height: auto;
+  margin: 0 auto; border-radius: 4px;
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.55);
 }
-.couv img {
-  max-width: 78%; max-height: 88%; width: auto; height: auto;
-  border-radius: 3px; box-shadow: 0 6px 14px rgba(26, 22, 17, 0.25);
+.bp-card figcaption {
+  color: rgba(250, 246, 238, 0.82); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.02em; text-align: center; line-height: 1.35;
 }
-.livre-info { flex: 1; min-width: 0; display: grid; gap: 3px; }
-.stock {
-  color: #2f7a3d; font-size: 11.5px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.05em;
+.bp-card figcaption strong { color: var(--papier); font-weight: 700; display: block; font-size: 12px; }
+.arch-eyebrow {
+  position: absolute; top: 18px; left: clamp(16px, 4vw, 32px); z-index: 3;
+  color: #fff; mix-blend-mode: exclusion; pointer-events: none;
+  font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;
 }
-.livre-info h3 { font-size: clamp(16px, 4vw, 19px); font-weight: 600; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.auteur { color: var(--brun); font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.livre-fin { display: grid; gap: 8px; justify-items: end; flex-shrink: 0; }
-.prix { font-family: 'Literata', 'Literata Fallback', serif; font-weight: 700; font-size: 17px; white-space: nowrap; }
-.livre .btn { padding: 8px 16px; font-size: 13.5px; }
-@media (min-width: 820px) { .livre { padding: 14px 18px 14px 14px; } .couv { width: 92px; height: 122px; } }
+.arch-info {
+  position: absolute; right: clamp(16px, 4vw, 32px); bottom: clamp(64px, 10vh, 96px); z-index: 3;
+  color: #fff; mix-blend-mode: exclusion; pointer-events: none;
+  display: grid; gap: 6px; justify-items: end; text-align: right;
+}
+.arch-kicker { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+.arch-circle {
+  display: inline-grid; place-items: center; width: 26px; height: 26px;
+  border: 2px solid #fff; border-radius: 50%; font-size: 12px;
+}
+.arch-prix { font-family: 'Literata', 'Literata Fallback', serif; font-weight: 700; font-size: clamp(38px, 9vw, 64px); line-height: 1; }
+.arch-stock { font-size: 12px; font-weight: 500; opacity: 0.85; }
+.arch-veil { position: absolute; inset: 0; background: var(--papier); opacity: 0; pointer-events: none; z-index: 4; }
+.arch-view {
+  position: absolute; right: clamp(16px, 4vw, 32px); bottom: clamp(16px, 4vh, 32px); z-index: 5;
+  transform: scale(0); transform-origin: right bottom;
+  padding: 18px 34px; font-size: clamp(20px, 5vw, 30px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bp-card { transform: none; will-change: auto; }
+  .arch-view { transform: none; }
+}
 
 /* Sélection estivale (leur campagne réelle) */
 .ete {
@@ -304,19 +326,18 @@ h2 { font-size: clamp(29px, 6.2vw, 50px); font-weight: 700; }
   </div>
 </section>
 
-<!-- LA TABLE DES NOUVEAUTÉS -->
-<section class="table-bg" id="nouveautes">
-  <div class="section-head" data-reveal>
-    <p class="eyebrow">La table des nouveautés</p>
-    <h2>Posés là pour vous, <span class="em">cette semaine.</span></h2>
-  </div>
-  <div class="liste-livres">
-    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/porteuse.webp" alt="La Porteuse de lettres" width="340" height="550"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>La Porteuse de lettres</h3><p class="auteur">Francesca Giannone · Roman</p></div><div class="livre-fin"><span class="prix">18,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
-    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/predateurs.webp" alt="L'Heure des prédateurs" width="340" height="558"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>L'Heure des prédateurs</h3><p class="auteur">Giuliano da Empoli · Essai</p></div><div class="livre-fin"><span class="prix">15,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
-    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/arbredefer.webp" alt="L'Arbre de fer" width="340" height="544"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>L'Arbre de fer</h3><p class="auteur">Michael Connelly · Polar</p></div><div class="livre-fin"><span class="prix">34,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
-    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/gamechangers.webp" alt="Game Changers T.02 Heated Rivalry" width="340" height="528"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>Game Changers T.02</h3><p class="auteur">Rachel Reid · Romance</p></div><div class="livre-fin"><span class="prix">34,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
-    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/momentscozy.webp" alt="Moments cozy, coloriage réconfortant" width="340" height="340"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>Moments cozy</h3><p class="auteur">Coloriage réconfortant</p></div><div class="livre-fin"><span class="prix">12,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
-    <article class="livre" data-reveal><span class="couv"><img loading="lazy" src="assets/viedecanard.webp" alt="Vie de canard cozy" width="340" height="340"></span><div class="livre-info"><p class="stock">En stock · Expédié en 48 h</p><h3>Vie de canard cozy</h3><p class="auteur">Coloriage réconfortant</p></div><div class="livre-fin"><span class="prix">12,95&nbsp;$</span><button class="btn" type="button">Ajouter<span class="arr" aria-hidden="true">→</span></button></div></article>
+<!-- LA TABLE DES NOUVEAUTÉS — galerie archive scroll-driven (réf. prmpt) -->
+<section class="archive" id="nouveautes">
+  <div class="arch-sticky">
+    <div class="arch-wrap" id="archWrap"></div>
+    <p class="arch-eyebrow">La table des nouveautés</p>
+    <div class="arch-info">
+      <p class="arch-kicker"><span class="arch-circle" aria-hidden="true"><span id="archSymbol">✳</span></span>Sélection « cette semaine »</p>
+      <p class="arch-prix">Dès 12,95&nbsp;$</p>
+      <p class="arch-stock">En stock · Expédié en 48 h</p>
+    </div>
+    <div class="arch-veil" id="archVeil" aria-hidden="true"></div>
+    <a class="btn arch-view" id="archView" href="#univers">Voir<span class="arr" aria-hidden="true">→</span></a>
   </div>
 </section>
 
@@ -403,6 +424,103 @@ document.querySelectorAll('[data-reveal]').forEach((el, i) => {
   el.style.transitionDelay = `${(i % 3) * 80}ms`;
   io.observe(el);
 });
+
+/* ---- Galerie archive (réf. prmpt) : grille éparpillée + scale scroll-driven ---- */
+(() => {
+  const LIVRES = [
+    { img: 'porteuse', t: 'La Porteuse de lettres', a: 'Francesca Giannone', p: '18,95 $' },
+    { img: 'spyfamily', t: 'Spy x Family #16', a: 'Tatsuya Endo', p: '' },
+    { img: 'momentscozy', t: 'Moments cozy', a: 'Coloriage réconfortant', p: '12,95 $' },
+    { img: 'predateurs', t: "L'Heure des prédateurs", a: 'Giuliano da Empoli', p: '15,95 $' },
+    { img: 'kpop', t: 'K-Pop Demon Hunters', a: 'Le roman officiel', p: '' },
+    { img: 'arbredefer', t: "L'Arbre de fer", a: 'Michael Connelly', p: '34,95 $' },
+    { img: 'grenouille', t: 'Vie de grenouille cozy', a: 'Coloriage réconfortant', p: '' },
+    { img: 'gamechangers', t: 'Game Changers T.02', a: 'Rachel Reid', p: '34,95 $' },
+    { img: 'clara', t: 'Tout le monde aime Clara', a: 'David Foenkinos', p: '' },
+    { img: 'viedecanard', t: 'Vie de canard cozy', a: 'Coloriage réconfortant', p: '12,95 $' },
+    { img: 'ciel', t: 'Plus grand que le ciel', a: 'Virginie Grimaldi', p: '' },
+    { img: 'bondroit', t: 'De bon droit', a: 'Chrystine Brouillet', p: '' }
+  ];
+  const section = document.querySelector('.archive');
+  const wrap = document.getElementById('archWrap');
+  const veil = document.getElementById('archVeil');
+  const view = document.getElementById('archView');
+  const symbol = document.getElementById('archSymbol');
+  if (!section || !wrap) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const cols = () => innerWidth >= 1024 ? 4 : innerWidth >= 640 ? 3 : 2;
+  // Répartition éparpillée : une image par rangée + une seconde chaque 3e rangée
+  function build() {
+    const c = cols();
+    wrap.innerHTML = '';
+    const grid = document.createElement('div');
+    grid.className = 'arch-grid';
+    let i = 0, r = 0;
+    while (i < LIVRES.length) {
+      const a = (r * 2 + (r % 2)) % c;
+      let b = -1;
+      if (r % 3 === 0 && i + 1 < LIVRES.length) { b = (a + 2) % c; if (b === a) b = (a + 1) % c; }
+      for (let col = 0; col < c; col++) {
+        const cell = document.createElement('div');
+        cell.className = 'arch-cell';
+        if ((col === a || col === b) && i < LIVRES.length) {
+          const L = LIVRES[i++];
+          const card = document.createElement('figure');
+          card.className = 'bp-card';
+          card.style.transformOrigin = (col < c / 2) ? 'right bottom' : 'left bottom';
+          card.innerHTML = `<img loading="lazy" src="assets/${L.img}.webp" alt="${L.t}">` +
+            `<figcaption><strong>${L.t}</strong>${L.a}${L.p ? ' · ' + L.p : ''}</figcaption>`;
+          cell.appendChild(card);
+        }
+        grid.appendChild(cell);
+      }
+      r++;
+    }
+    wrap.appendChild(grid);
+  }
+  build();
+
+  let vh = innerHeight, maxScroll = 0;
+  function size() {
+    vh = innerHeight;
+    maxScroll = Math.max(0, wrap.scrollHeight - vh);
+    section.style.height = (vh + maxScroll + vh * 0.9) + 'px';
+  }
+  size();
+  addEventListener('resize', () => { build(); size(); });
+
+  const SYMS = ['✳', '❋', '§', '¶', '&'];
+  let lastSym = 0;
+  const cards = () => wrap.querySelectorAll('.bp-card');
+  function frame() {
+    const rect = section.getBoundingClientRect();
+    const scrolled = Math.max(0, -rect.top);
+    if (rect.top < vh && rect.bottom > 0) {
+      wrap.style.transform = `translateY(${-Math.min(scrolled, maxScroll)}px)`;
+      if (!reduced) {
+        for (const card of cards()) {
+          const cr = card.parentElement.getBoundingClientRect();
+          let s = 0;
+          if (cr.bottom > 0 && cr.top < vh) {
+            const enter = Math.min(1, (vh - cr.top) / (vh * 0.6));
+            const exit = Math.min(1, cr.bottom / (vh * 0.4));
+            s = Math.max(0, Math.min(enter, exit));
+          }
+          card.style.transform = `scale(${s.toFixed(3)})`;
+        }
+        const now = performance.now();
+        if (scrolled > 0 && now - lastSym > 80) { lastSym = now; symbol.textContent = SYMS[(Math.random() * SYMS.length) | 0]; }
+      }
+      const p = Math.max(0, Math.min(1, (scrolled - maxScroll) / (vh * 0.9)));
+      veil.style.opacity = p.toFixed(3);
+      if (!reduced) view.style.transform = `scale(${p.toFixed(3)})`;
+      view.style.pointerEvents = p > 0.5 ? 'auto' : 'none';
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
