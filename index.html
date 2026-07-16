@@ -51,7 +51,9 @@ img { max-width: 100%; display: block; }
   font-weight: 700; text-decoration: none; color: var(--encre);
   background: var(--jaune); border: none; cursor: pointer;
   border-radius: 999px; transition: background-color 0.2s, transform 0.2s;
-  font-family: 'Karla', sans-serif;
+  font-family: 'Karla', 'Karla Fallback', sans-serif;
+  padding: 12px 22px; font-size: 15px; white-space: nowrap;
+  max-width: 100%;
 }
 .btn:hover { background: var(--jaune-2); }
 .btn:active { transform: scale(0.96); }
